@@ -8,7 +8,7 @@
 - [ ] ATtiny84
   - vorhanden: ATtiny84V-10PU: 1,8V - 5,5V, 10MHz
   - Anleitung: ATtiny84-20PU:  2,7V - 5,5V, 20MHz
-  - [[https://www.reichelt.de/de/de/8-bit-attiny-avr-risc-mikrocontroller-8-kb-10-mhz-dip-14-attiny-84v-10-pu-p69889.html?r=1][Reichelt]], [[https://cdn-reichelt.de/documents/datenblatt/A300/attiny84.pdf][Datenblatt]]
+  - [[https://www.reichelt.de/de/de/8-bit-attiny-avr-risc-mikrocontroller-8-kb-10-mhz-dip-14-attiny-84v-10-pu-p69889.html?r=1][Reichelt]], [[https://cdn-reichelt.de/documents/datenblatt/A300/attiny84.pdf][Datenblatt]], Pinout
   - [[https://www.heise.de/ratgeber/Erste-Schritte-mit-den-Mikrocontrollern-ATtiny84-und-85-4399393.html][c't-Anleitung]]
 - [ ] RFM95 (LoRaWan-Sender)
   - Anbieter:
@@ -23,15 +23,17 @@
   - laut c't laufen ATtiny und RFM95 im Bereich 1,8 - 3,9V
   - laut [[https://cdn-learn.adafruit.com/assets/assets/000/031/659/original/RFM95_96_97_98W.pdf?1460518717][datasheet]] sind für den RFM95 1,8V - 3,7V angebrachter
   - der DHT22 / AM2302 laut [[https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf][datasheet]] mit *3,3 - 6V*
+  - der AM2320 laut [[https://cdn-shop.adafruit.com/product-files/3721/AM2320.pdf][datasheet]] *3,1 - 5,5V*
   - 4x 1,2V (AA-Akkus) wären 4,8V → zu viel!
   - 2x 1,5V (Batterie) wären 3V → *passt nicht für DHT22*
   - wie schaut's mit dem DHT22 aus?
 - [ ] Batteriefach
 - [ ] Feuchtesensor:
   - DHT22 / AM2302: [[https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf][datasheet]], [[https://github.com/jscrane/DHT][lib]], [[https://crycode.de/diy-funk-wetterstation-mit-dht22-attiny85-und-radiohead][example]]
-  - [[https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf][datasheet]] sagt "One capacitor valued 100nF can be added between
-    *VDD and GND* for wave filtering.", im [[https://znil.net/index.php/ESP8266_Wemos_D1_Mini_mit_DHT22_Sensor_Beispiel][Beispiel]] setzen sie einen
-    10KOhm-Widerstand zwischen *VDD und DATA*
+    - [[https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf][datasheet]] sagt "One capacitor valued 100nF can be added between
+      *VDD and GND* for wave filtering.", im [[https://znil.net/index.php/ESP8266_Wemos_D1_Mini_mit_DHT22_Sensor_Beispiel][Beispiel]] setzen sie einen
+      10KOhm-Widerstand zwischen *VDD und DATA*
+  - AM2320: [[https://cdn-shop.adafruit.com/product-files/3721/AM2320.pdf][datasheet]], 3,1 - 5,5V, [[https://unsinnsbasis.de/am2320/][wohl ungenauer]]
 - [ ] Pins für ATtiny zur Programmierung
 - [ ] Gehäuse:
   - [ ] Antennendurchführung
