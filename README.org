@@ -1,6 +1,7 @@
 * Upload mit Arduino Nano
 Infos:
 - https://wolles-elektronikkiste.de/en/programming-attiny85-84-45-44-25-24
+- https://www.heise.de/ratgeber/Erste-Schritte-mit-den-Mikrocontrollern-ATtiny84-und-85-4399393.html
 - https://arduinodiy.wordpress.com/2012/02/28/program-an-attiny-with-an-arduino-nano/
   → Verkabelung spezifisch für Arduino Nano
 

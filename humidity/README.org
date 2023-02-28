@@ -1,0 +1,45 @@
+* Temperatur und Luftfeuchte messen und mittels LoRaWan übertragen
+
+- Schaltplan: [[file:schaltplan.fzz]]
+- [[file:briefkastensensor.jpg][Schaltung Briefkastensensor]] (c't Projekte 2019)
+
+** Bauteile und Informationen
+- [ ] Idee/Vorlage: [[https://www.heise.de/select/ct-special/2019/5/softlinks/wyjb?wt_mc=pred.red.ct.sh_special052019.090.softlink.softlink][ct.de/wyjb]]
+- [ ] ATtiny84
+  - vorhanden: ATtiny84V-10PU: 1,8V - 5,5V, 10MHz
+  - Anleitung: ATtiny84-20PU:  2,7V - 5,5V, 20MHz
+  - [[https://www.reichelt.de/de/de/8-bit-attiny-avr-risc-mikrocontroller-8-kb-10-mhz-dip-14-attiny-84v-10-pu-p69889.html?r=1][Reichelt]], [[https://cdn-reichelt.de/documents/datenblatt/A300/attiny84.pdf][Datenblatt]]
+  - [[https://www.heise.de/ratgeber/Erste-Schritte-mit-den-Mikrocontrollern-ATtiny84-und-85-4399393.html][c't-Anleitung]]
+- [ ] RFM95 (LoRaWan-Sender)
+  - Anbieter:
+    - [[https://de.rs-online.com/web/c/halbleiter/kommunikations-und-funkmodul-ics/lpwan/?r=f&redirect-relevancy-data=7365617263685F636173636164655F6F726465723D31267365617263685F696E746572666163655F6E616D653D4931384E5461786F6E6F6D794272616E64267365617263685F6C616E67756167655F757365643D6465267365617263685F6D617463685F6D6F64653D6D61746368616C6C267365617263685F7061747465726E5F6D6174636865643D5E5B5C707B4C7D5C707B4E647D2D2C2F252E5D2B24267365617263685F7061747465726E5F6F726465723D3136267365617263685F73745F6E6F726D616C697365643D59267365617263685F726573706F6E73655F616374696F6E3D43617465676F72795F5265646972656374267365617263685F747970653D4B4559574F52445F53494E474C455F414C5048415F4E554D45524943267365617263685F77696C645F63617264696E675F6D6F64653D4E4F4E45267365617263685F6B6579776F72643D72666D393577267365617263685F6B6579776F72645F6170703D72666D393577267365617263685F636F6E6669673D3126&searchHistory=%7B%22enabled%22%3Atrue%7D&searchTerm=rfm95w&searchType=KEYWORD_SINGLE_ALPHA_NUMERIC][rs-online.com]] hat welche?! (22€!)
+    - Digikey: [[https://www.digikey.de/de/products/detail/adafruit-industries-llc/3072/6005357][1]] (18€), [[https://www.digikey.de/de/products/detail/rf-solutions/RFM95W-915S2R/15792834][2]] (20€)
+    - Berrybase: [[https://www.berrybase.de/adafruit-rfm95w-lora-radio-transceiver-breakout-868-oder-915-mhz#][1]] (24€), [[https://www.berrybase.de/adafruit-lora-radio-featherwing-rfm95w-433-mhz#][2]] (13€), [[https://www.berrybase.de/seeed-grove-lora-radio-433mhz][3]]
+    - https://www.makershop.de/module/funk/rfm95w-868mhz/
+  - [[https://www.hoperf.com/modules/lora/RFM95.html][Datenblatt]]
+  - [[https://www.adafruit.com/product/3231][AdaFruit]], [[https://learn.adafruit.com/radio-featherwing/downloads][downloads]]
+  - [[https://learn.adafruit.com/radio-featherwing/assembly][assembly]] des Antennenanschlusses
+- [ ] Spannungsversorgung:
+  - laut c't laufen ATtiny und RFM95 im Bereich 1,8 - 3,9V
+  - laut [[https://cdn-learn.adafruit.com/assets/assets/000/031/659/original/RFM95_96_97_98W.pdf?1460518717][datasheet]] sind für den RFM95 1,8V - 3,7V angebrachter
+  - der DHT22 / AM2302 laut [[https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf][datasheet]] mit *3,3 - 6V*
+  - 4x 1,2V (AA-Akkus) wären 4,8V → zu viel!
+  - 2x 1,5V (Batterie) wären 3V → *passt nicht für DHT22*
+  - wie schaut's mit dem DHT22 aus?
+- [ ] Batteriefach
+- [ ] Feuchtesensor:
+  - DHT22 / AM2302: [[https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf][datasheet]], [[https://github.com/jscrane/DHT][lib]], [[https://crycode.de/diy-funk-wetterstation-mit-dht22-attiny85-und-radiohead][example]]
+  - [[https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf][datasheet]] sagt "One capacitor valued 100nF can be added between
+    *VDD and GND* for wave filtering.", im [[https://znil.net/index.php/ESP8266_Wemos_D1_Mini_mit_DHT22_Sensor_Beispiel][Beispiel]] setzen sie einen
+    10KOhm-Widerstand zwischen *VDD und DATA*
+- [ ] Pins für ATtiny zur Programmierung
+- [ ] Gehäuse:
+  - [ ] Antennendurchführung
+  - [ ] Feuchtesensor aussen → Wetterschutz!
+  - [ ] Zugang Batterien
+
+** Lösung mit Wemos D1
+- [[https://www.heise.de/select/make/2021/3/2109811415303580186][Deep Sleep]] → Achtung! Ich brauche WiFi ja gar nicht, kann es also
+  auch GANZ deaktivieren!
+- RFM95 wird über SPI angeschlossen
+- DHT22: one wire → [[https://znil.net/index.php/ESP8266_Wemos_D1_Mini_mit_DHT22_Sensor_Beispiel][Beispiel]]
