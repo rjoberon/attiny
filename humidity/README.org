@@ -3,6 +3,14 @@
 - Schaltplan: [[file:schaltplan.fzz]]
 - [[file:briefkastensensor.jpg][Schaltung Briefkastensensor]] (c't Projekte 2019)
 
+** LoRaWan
+- [[https://learn.adafruit.com/the-things-network-for-feather][deprecation-Warnung bei AdaFruit]] → Modul [[https://www.thethingsnetwork.org/forum/t/single-channel-packet-forwarders-scpf-are-obsolete-and-not-supported/31117][obsolete]]?
+  - [[https://www.thethingsnetwork.org/forum/t/using-adafruit-feather-m0-rfm95-lora-radio-900mhz-with-ttn-v3/56609][oder doch nicht]]?
+- [[https://www.thethingsnetwork.org/forum/t/attiny85-rfm95-temperature-sensor/11211/22][Disskussion zu LoRa-Lib für ATtiny]]
+- [[https://www.iot-lab.org/blog/101/][Blog-Post]] zu dem Code, den ich nutze
+  - [[https://www.iot-lab.org/blog/663/][Update für TheThingsStack V3]]
+- [[https://www.iot-lab.org/blog/264/][Code incl. Sensor]]
+
 ** Bauteile und Informationen
 - [ ] Idee/Vorlage: [[https://www.heise.de/select/ct-special/2019/5/softlinks/wyjb?wt_mc=pred.red.ct.sh_special052019.090.softlink.softlink][ct.de/wyjb]]
 - [ ] ATtiny84
@@ -34,11 +42,19 @@
       *VDD and GND* for wave filtering.", im [[https://znil.net/index.php/ESP8266_Wemos_D1_Mini_mit_DHT22_Sensor_Beispiel][Beispiel]] setzen sie einen
       10KOhm-Widerstand zwischen *VDD und DATA*
   - AM2320: [[https://cdn-shop.adafruit.com/product-files/3721/AM2320.pdf][datasheet]], 3,1 - 5,5V, [[https://unsinnsbasis.de/am2320/][wohl ungenauer]]
+  - [[https://www.google.com/search?q=bosch%20BME280][Bosch BME280]] → *Untersuchen!*
 - [ ] Pins für ATtiny zur Programmierung
 - [ ] Gehäuse:
   - [ ] Antennendurchführung
   - [ ] Feuchtesensor aussen → Wetterschutz!
   - [ ] Zugang Batterien
+
+** Code
+- [[https://github.com/jamct/radio-mailbox/blob/master/03_lora_test/src/main.cpp][LoRaTest]]
+- start with [[https://gitlab.com/iot-lab-org/ATtiny84_low_power_LoRa_node_OOP][this code]]:
+  - install platformIO :-(
+  - remove BME280 code and just add test code (counter as in [[https://github.com/jamct/radio-mailbox/blob/master/03_lora_test/src/main.cpp][LoRaTest]])
+  -
 
 ** Lösung mit Wemos D1
 - [[https://www.heise.de/select/make/2021/3/2109811415303580186][Deep Sleep]] → Achtung! Ich brauche WiFi ja gar nicht, kann es also

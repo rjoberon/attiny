@@ -5,9 +5,98 @@ Infos:
 - https://arduinodiy.wordpress.com/2012/02/28/program-an-attiny-with-an-arduino-nano/
   → Verkabelung spezifisch für Arduino Nano
 
-Vorgehen:
-1. Arduino als Programmer einrichten (Sketch "ArduinoISP" hochladen)
-   - wichtig: Tools → Registers Emulation → None (ATMEGA4809) in der
-     ArduinoIDE wählen
-2. Programm für ATTiny hochladen
-   - wichtig: Sketch → Upload using Programmer (Upload-Button geht nicht!)
+Vorgehen mit der ArduinoIDE:
+1. Arduino als Programmer einrichten:
+   1. ATtiny nicht verbinden!
+   2. +10µF-Kondensator zwischen GND und RST+ (hier nicht notwendig!)
+   3. File → Examples → ArduinoISP wählen
+   4. Arduino Nano Every als Board auswählen
+   5. Baudrate im Serial-Monitor gleich BAUDRATE [[https://arduino.stackexchange.com/questions/78054/cant-upload-sketches-to-arduino-nano-every][im Sketch setzen]]
+   6. Tools → Registers Emulation → None (ATMEGA4809) wählen
+   7. Fehler ~avrdude: jtagmkII_initialize(): Cannot locate "flash"
+      and "boot" memories in description~ [[https://support.arduino.cc/hc/en-us/articles/4405239282578-avrdude-jtagmkII-initialize-Cannot-locate-flash-and-boot-memories-in-description][ignorieren]]
+2. Programm für ATtiny hochladen
+   1. ATtiny wie [[https://www.heise.de/ratgeber/Erste-Schritte-mit-den-Mikrocontrollern-ATtiny84-und-85-4399393.html?hg=1&hgi=0&hgf=false][hier]] beschrieben verbinden (+0.1µF zwischen VCC und GND!)
+   2. am Arduino 10µF-Kondensator zwischen GND und RST
+   3. Sketch öffnen
+   4. ATtiny als Board auswählen
+   5. Tools → Processor → ATtiny84 (oder anderen)
+   6. Tools → Programmer → Arduino *as* ISP
+   7. Sketch → Upload using Programmer (Upload-Button geht nicht!)
+
+* Serielle Konsole via Arduino Nano
+- https://jloh02.github.io/projects/connecting-attiny85-serial-monitor/
+- https://www.hackster.io/porrey/easy-serial-on-the-attiny-2676e6
+- https://forum.arduino.cc/t/attiny85-using-software-serial-error-solved/389825/8
+
+** Sketch für ATtiny
+- wie oben beschrieben hochladen:
+
+** Sketch für Arduino
+- mit Sketch "ArduinoISP" funktioniert es nicht, daher anderen Sketch,
+  z.B. Examples→Basic→Bare Minimum hochladen
+
+** Verbindung
+(alles physische PIN-Nummern!)
+| Arduino | ATtiny       |
+|---------+--------------|
+| 3.3V    | Pin 1 (VCC)  |
+| GND     | Pin 14 (GND) |
+|         |              |
+
+- [[https://www.mikrocontroller.net/topic/339210][Diskussion zur Pin-Bezeichnung]]
+
+** TODO Nächste Schritte
+- [[https://www.arduinoforum.de/arduino-Thread-Serial-Monitor-als-Debughilfe-f%C3%BCr-den-ATtiny85-und-andere-ATMEL-Mikrocontroller][Arduino as ISP-Sketch incl. Serial]] ([[https://www.arduinoforum.de/attachment.php?aid=1231][Verkabelung]])
+
+** serielle Konsolle mittels screen lesen
+- ~screen /dev/ttyACM0 19200~
+
+** Infos vom ATTiny mittels avrdude
+- klappt Umstellung auf 8MHz → [[https://arduino.stackexchange.com/questions/49999/attiny85-serial-communication-bootloader-and-setting-up-fuses][so testen]]:
+#+begin_src sh
+avrdude -P /dev/ttyACM0 -b19200 -c avrisp -p attiny84 -v
+#+end_src
+
+#+RESULTS:
+
+** ATTinyCore
+- https://github.com/SpenceKonde/ATTinyCore
+- [[https://wolles-elektronikkiste.de/attiny-mit-arduino-code-programmieren][Anleitung]]
+- "Also, *if using ATTinyCore, consider using the builtin soft serial,
+  instead of SoftwareSerial* (SoftwareSerial prevents you from using
+  all PCINTs in exchange for being able to use any pin for RX, mine
+  doesn't interfere with PCINTs (uses the analog comparator interrupt
+  instead - but pins are fixed)" [[https://forum.arduino.cc/t/attiny85-and-nano-serial-monitor/675804/2][Quelle]]
+- TX auf PA1 (Pin 12), RX auf PA2 (Pin 11)
+
+** TinyDebugSerial
+
+- https://github.com/FragJage/TinyDebugSerial
+- TX auf PB0 (Pin 2)
+
+#+begin_src c
+#include "TinyDebugSerial.h"
+
+int ledPin = 3; // = PA2
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+void loop() {
+  digitalWrite(ledPin, HIGH);
+  Serial.println("blink");
+  delay(500);
+  digitalWrite(ledPin, LOW);
+  delay(500);
+}
+#+end_src
+
+* LoRa
+- [[https://www.thethingsnetwork.org/forum/t/running-lorawan-on-the-attiny/6004][Forumsdiskussion]]
+- [[https://www.heise.de/select/ct-special/2019/5/softlinks/wyjb?wt_mc=pred.red.ct.sh_special052019.090.softlink.softlink][c't-Links]]
+- [[http://www.iot-lab.org/blog/101/][Blogbeitrag, auf dem wohl der c't-Artikel basiert]]
+- [[https://www.iot-lab.org/blog/663/][Anpassung an The Things Stack V3]]
+- [[https://www.iot-lab.org/blog/264/][Noch ein Beitrag mit Sensor]]
+- [[https://www.thethingsnetwork.org/forum/t/using-adafruit-feather-m0-rfm95-lora-radio-900mhz-with-ttn-v3/56609][noch eine Forumsdiskussion]]
