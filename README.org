@@ -28,6 +28,7 @@ Vorgehen mit der ArduinoIDE:
 - https://jloh02.github.io/projects/connecting-attiny85-serial-monitor/
 - https://www.hackster.io/porrey/easy-serial-on-the-attiny-2676e6
 - https://forum.arduino.cc/t/attiny85-using-software-serial-error-solved/389825/8
+- [[https://www.arduinoforum.de/arduino-Thread-Serial-Monitor-als-Debughilfe-f%C3%BCr-den-ATtiny85-und-andere-ATMEL-Mikrocontroller][Arduino as ISP-Sketch incl. Serial]] ([[https://www.arduinoforum.de/attachment.php?aid=1231][Verkabelung]])
 
 ** Sketch für ATtiny
 - wie oben beschrieben hochladen:
@@ -46,9 +47,6 @@ Vorgehen mit der ArduinoIDE:
 
 - [[https://www.mikrocontroller.net/topic/339210][Diskussion zur Pin-Bezeichnung]]
 
-** TODO Nächste Schritte
-- [[https://www.arduinoforum.de/arduino-Thread-Serial-Monitor-als-Debughilfe-f%C3%BCr-den-ATtiny85-und-andere-ATMEL-Mikrocontroller][Arduino as ISP-Sketch incl. Serial]] ([[https://www.arduinoforum.de/attachment.php?aid=1231][Verkabelung]])
-
 ** serielle Konsolle mittels screen lesen
 - ~screen /dev/ttyACM0 19200~
 
@@ -60,6 +58,9 @@ avrdude -P /dev/ttyACM0 -b19200 -c avrisp -p attiny84 -v
 
 #+RESULTS:
 
+** SoftwareSerial
+- Pin-IDs = Spalte "PlatformIO"
+- *funktioniert*
 ** ATTinyCore
 - https://github.com/SpenceKonde/ATTinyCore
 - [[https://wolles-elektronikkiste.de/attiny-mit-arduino-code-programmieren][Anleitung]]
@@ -69,6 +70,8 @@ avrdude -P /dev/ttyACM0 -b19200 -c avrisp -p attiny84 -v
   doesn't interfere with PCINTs (uses the analog comparator interrupt
   instead - but pins are fixed)" [[https://forum.arduino.cc/t/attiny85-and-nano-serial-monitor/675804/2][Quelle]]
 - TX auf PA1 (Pin 12), RX auf PA2 (Pin 11)
+- *funktioniert*
+
 
 ** TinyDebugSerial
 
@@ -100,3 +103,10 @@ void loop() {
 - [[https://www.iot-lab.org/blog/663/][Anpassung an The Things Stack V3]]
 - [[https://www.iot-lab.org/blog/264/][Noch ein Beitrag mit Sensor]]
 - [[https://www.thethingsnetwork.org/forum/t/using-adafruit-feather-m0-rfm95-lora-radio-900mhz-with-ttn-v3/56609][noch eine Forumsdiskussion]]
+
+** TODO Nächste Schritte
+- Vom blink+serial-Sketch ausgehend Code hinzufügen:
+  - Ausgabe Voltage
+  - Schlafmodus
+  - RFM95.init()
+  - usw.

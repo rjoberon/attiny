@@ -3,6 +3,21 @@
 - Schaltplan: [[file:schaltplan.fzz]]
 - [[file:briefkastensensor.jpg][Schaltung Briefkastensensor]] (c't Projekte 2019)
 
+** Pinbelegung / Verbindung RFM95 ←→ ATtiny
+
+| ATtiny     | Arduino | PIO | Phy | RFM95      |
+|------------+---------+-----+-----+------------|
+| PB0        |      10 |   0 |   2 | IRQ = DIO0 |
+| PB1        |       9 |   1 |   3 | CS = NSS   |
+| MOSI       |       6 |   4 |   7 | MOSI       |
+| MISO = PA5 |       5 |   5 |   8 | MISO       |
+| SCK = PA4  |       4 |   6 |   9 | SCK        |
+
+TX Serial:
+- konfiguriert als PA2 (= 2 bei Arduino, also physisch 11)
+- da SoftwareSerial die 2 mittels PlatformIO interpretiert, ergibt das
+  dann physisch 5, also PB2
+
 ** LoRaWan
 - [[https://learn.adafruit.com/the-things-network-for-feather][deprecation-Warnung bei AdaFruit]] → Modul [[https://www.thethingsnetwork.org/forum/t/single-channel-packet-forwarders-scpf-are-obsolete-and-not-supported/31117][obsolete]]?
   - [[https://www.thethingsnetwork.org/forum/t/using-adafruit-feather-m0-rfm95-lora-radio-900mhz-with-ttn-v3/56609][oder doch nicht]]?
@@ -34,7 +49,7 @@
   - der AM2320 laut [[https://cdn-shop.adafruit.com/product-files/3721/AM2320.pdf][datasheet]] *3,1 - 5,5V*
   - 4x 1,2V (AA-Akkus) wären 4,8V → zu viel!
   - 2x 1,5V (Batterie) wären 3V → *passt nicht für DHT22*
-  - wie schaut's mit dem DHT22 aus?
+  - 3x 1,2V (AA-Akkus) w#ren 3,6V → passt
 - [ ] Batteriefach
 - [ ] Feuchtesensor:
   - DHT22 / AM2302: [[https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf][datasheet]], [[https://github.com/jscrane/DHT][lib]], [[https://crycode.de/diy-funk-wetterstation-mit-dht22-attiny85-und-radiohead][example]]
